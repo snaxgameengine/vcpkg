@@ -5,12 +5,6 @@
   "homepage": "https://www.qt.io/",
   "license": null,
   "dependencies": [
-    "freetype",
-    {
-      "name": "libb2",
-      "platform": "!windows"
-    },
-    "pcre2",
     {
       "name": "qtbase",
       "host": true,
@@ -28,7 +22,6 @@
       "name": "qtbase",
       "default-features": false,
       "features": [
-        "pcre2"
       ],
       "platform": "windows & static"
     },
@@ -43,9 +36,7 @@
     "zlib"
   ],
   "default-features": [
-    "brotli",
     "concurrent",
-    "dbus",
     "default-features",
     "doubleconversion",
     "freetype",
@@ -55,73 +46,22 @@
     "jpeg",
     "network",
     "openssl",
-    "pcre2",
     "png",
-    "sql",
-    "sql-psql",
-    "sql-sqlite",
-    "testlib",
-    "widgets",
-    "zstd"
+    "widgets"
   ],
   "features": {
-    "appstore-compliant": {
-      "description": "Disable code that is not allowed in platform app stores. This is on by default for platforms which require distribution through an app store by default, in particular Android, iOS, tvOS, and watchOS."
-    },
-    "brotli": {
-      "description": "Support for downloading and decompressing resources compressed with Brotli through QNetworkAccessManager.",
-      "dependencies": [
-        "brotli",
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "network"
-          ]
-        }
-      ]
-    },
     "concurrent": {
       "description": "Provides a high-level multi-threading API. Qt Concurrent"
-    },
-    "dbus": {
-      "description": "Qt D-Bus"
     },
     "default-features": {
       "description": "Platform-dependent default features",
       "dependencies": [
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "appstore-compliant"
-          ],
-          "platform": "uwp"
-        },
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "egl",
-            "fontconfig",
-            "xcb",
-            "xcb-xlib",
-            "xrender"
-          ],
-          "platform": "linux"
-        }
-      ]
-    },
+	  ]
+	},
     "doubleconversion": {
       "description": "Enable double conversion support",
       "dependencies": [
         "double-conversion"
-      ]
-    },
-    "egl": {
-      "description": "EGL",
-      "dependencies": [
-        "egl-registry"
       ]
     },
     "fontconfig": {
@@ -137,10 +77,6 @@
         }
       ]
     },
-    "framework": {
-      "$platform": "osx",
-      "description": "MAC framework build"
-    },
     "freetype": {
       "description": "Supports the FreeType 2 font engine (and its supported font formats).",
       "dependencies": [
@@ -148,12 +84,6 @@
           "name": "freetype",
           "default-features": false
         }
-      ]
-    },
-    "glib": {
-      "description": "GLib",
-      "dependencies": [
-        "glib"
       ]
     },
     "gui": {
@@ -216,12 +146,6 @@
         }
       ]
     },
-    "pcre2": {
-      "description": "Enable PCRE2 support",
-      "dependencies": [
-        "pcre2"
-      ]
-    },
     "png": {
       "description": "Enable PNG",
       "dependencies": [
@@ -235,50 +159,6 @@
         }
       ]
     },
-    "sql": {
-      "description": "Qt Sql",
-      "dependencies": [
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "concurrent"
-          ]
-        }
-      ]
-    },
-    "sql-psql": {
-      "description": "Enable SQL Driver psql",
-      "dependencies": [
-        "libpq",
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "sql"
-          ]
-        }
-      ]
-    },
-    "sql-sqlite": {
-      "description": "Enable SQL Driver sqlite",
-      "dependencies": [
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "sql"
-          ]
-        },
-        "sqlite3"
-      ]
-    },
-    "testlib": {
-      "description": "Qt Testlib"
-    },
-    "vulkan": {
-      "description": "Enable Vulkan support"
-    },
     "widgets": {
       "description": "Qt Widgets",
       "dependencies": [
@@ -289,68 +169,6 @@
             "gui"
           ]
         }
-      ]
-    },
-    "xcb": {
-      "description": "XCB",
-      "dependencies": [
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "concurrent",
-            "xkbcommon-x11",
-            "xlib"
-          ]
-        }
-      ]
-    },
-    "xcb-xlib": {
-      "description": "xcb-xlib",
-      "dependencies": [
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "xlib"
-          ]
-        }
-      ]
-    },
-    "xkb": {
-      "description": "XKB"
-    },
-    "xkbcommon-x11": {
-      "description": "xkbcommon_x11",
-      "dependencies": [
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "xkb"
-          ]
-        }
-      ]
-    },
-    "xlib": {
-      "description": "XLib"
-    },
-    "xrender": {
-      "description": "XRender for native painting",
-      "dependencies": [
-        {
-          "name": "qtbase",
-          "default-features": false,
-          "features": [
-            "xcb"
-          ]
-        }
-      ]
-    },
-    "zstd": {
-      "description": "Zstandard support",
-      "dependencies": [
-        "zstd"
       ]
     }
   }

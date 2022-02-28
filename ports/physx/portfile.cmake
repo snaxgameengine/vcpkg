@@ -25,7 +25,6 @@ set(OPTIONS
     "-DPX_BUILDPUBLICSAMPLES=OFF"
     "-DPX_FLOAT_POINT_PRECISE_MATH=OFF"
     "-DPX_COPY_EXTERNAL_DLL=OFF"
-    "-DGPU_DLL_COPIED=ON"
 )
 
 set(OPTIONS_RELEASE
@@ -110,7 +109,7 @@ fixup_physx_artifacts(
 )
 fixup_physx_artifacts(
     DIRECTORY "bin"
-    SUFFIXES ${VCPKG_TARGET_SHARED_LIBRARY_SUFFIX} ".pdb"
+	SUFFIXES ${VCPKG_TARGET_SHARED_LIBRARY_SUFFIX} ".pdb"
 )
 
 # Remove compiler directory and descendents.

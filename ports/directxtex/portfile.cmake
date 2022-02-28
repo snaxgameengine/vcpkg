@@ -44,7 +44,7 @@ endif()
 if(VCPKG_TARGET_IS_UWP)
   set(EXTRA_OPTIONS -DBUILD_TOOLS=OFF)
 else()
-  set(EXTRA_OPTIONS -DBUILD_TOOLS=ON)
+  set(EXTRA_OPTIONS -DBUILD_TOOLS=OFF)
 endif()
 
 vcpkg_cmake_configure(
@@ -53,7 +53,8 @@ vcpkg_cmake_configure(
         ${FEATURE_OPTIONS}
         ${EXTRA_OPTIONS}
         -DBC_USE_OPENMP=ON
-        -DBUILD_DX11=ON
+        -DBUILD_DX11=OFF
+        -DBUILD_DX12=ON
 )
 
 vcpkg_cmake_install()
