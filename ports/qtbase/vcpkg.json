@@ -5,6 +5,17 @@
   "homepage": "https://www.qt.io/",
   "license": null,
   "dependencies": [
+    "freetype",
+    {
+      "name": "libb2",
+      "platform": "!windows"
+    },
+    "pcre2",
+    {
+      "name": "qtbase",
+      "host": true,
+      "default-features": false
+    },
     {
       "name": "qtbase",
       "host": true,
@@ -22,6 +33,7 @@
       "name": "qtbase",
       "default-features": false,
       "features": [
+		"pcre2"
       ],
       "platform": "windows & static"
     },
@@ -44,6 +56,7 @@
     "harfbuzz",
     "icu",
     "jpeg",
+	"pcre2",
     "network",
     "openssl",
     "png",
@@ -144,6 +157,12 @@
             "network"
           ]
         }
+      ]
+    },
+    "pcre2": {
+      "description": "Enable PCRE2 support",
+      "dependencies": [
+        "pcre2"
       ]
     },
     "png": {
