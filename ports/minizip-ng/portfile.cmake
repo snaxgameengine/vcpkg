@@ -1,18 +1,21 @@
+if (VCPKG_TARGET_IS_WINDOWS)
+    vcpkg_check_linkage(ONLY_STATIC_LIBRARY)
+endif()
+
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO zlib-ng/minizip-ng
-    REF 3.0.2
-    SHA512 eee4d35d273ab0a32972b119c8faabd8c242e2d9f506fab0dd21fdd24c78b932c01bf7f15e9cf7c452776fc4c2e27a5ff09e376adb7a706336d11114929182fc
+    REF "${VERSION}"
+    SHA512 4e626a312c35e5f003e4f365261ef3e1bf33488f8698ec31b1b33d32f6a34ed0b54f0e3ffdae658e5b441532dde3cee45c3822532f52e68ea588e809e8f4081c
     HEAD_REF master
-    PATCHES 
-        Modify-header-file-path.patch
+    PATCHES
+        fix_find_zstd.patch
 )
 
 vcpkg_check_features(
     OUT_FEATURE_OPTIONS FEATURE_OPTIONS
     FEATURES
         pkcrypt MZ_PKCRYPT
-        signing MZ_SIGNING
         wzaes MZ_WZAES
         openssl MZ_OPENSSL
         bzip2 MZ_BZIP2
@@ -27,16 +30,17 @@ vcpkg_cmake_configure(
     OPTIONS 
         ${FEATURE_OPTIONS}
         -DMZ_FETCH_LIBS=OFF
-        -DMZ_PROJECT_SUFFIX:STRING=-ng
+        -DMZ_LIB_SUFFIX=-ng
+        -DMZ_ICONV=OFF
 )
 
 vcpkg_cmake_install()
 
 vcpkg_fixup_pkgconfig()
-vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/${PORT})
+vcpkg_cmake_config_fixup(CONFIG_PATH lib/cmake/minizip-ng)
 vcpkg_copy_pdbs()
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/share")
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")
 
-configure_file("${SOURCE_PATH}/LICENSE" "${CURRENT_PACKAGES_DIR}/share/${PORT}/copyright" COPYONLY)
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")

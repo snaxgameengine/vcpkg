@@ -27,12 +27,6 @@ if("lzma" IN_LIST FEATURES)
     list(APPEND B2_OPTIONS
         -sLZMA_INCLUDE="${CURRENT_INSTALLED_DIR}/include"
     )
-    # Overwride debug library name
-    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        list(APPEND B2_OPTIONS
-            -sLZMA_NAME=lzmad
-        )
-    endif()
     list(APPEND B2_OPTIONS
         -sLZMA_LIBRARY_PATH="${CURRENT_INSTALLED_DIR}/${lib_path_suffix}"
     )
@@ -46,12 +40,12 @@ if("zlib" IN_LIST FEATURES)
     list(APPEND B2_OPTIONS
         -sZLIB_INCLUDE="${CURRENT_INSTALLED_DIR}/include"
     )
-    # Overwride debug library name
-    if(CMAKE_BUILD_TYPE STREQUAL "Debug")
-        if(WIN32)
+    # Overwride windows library names
+    if(WIN32)
+        if(CMAKE_BUILD_TYPE STREQUAL "Debug")
             set(ZLIB_NAME zlibd)
         else()
-            set(ZLIB_NAME z)
+            set(ZLIB_NAME zlib) # for mingw
         endif()
         list(APPEND B2_OPTIONS
             -sZLIB_NAME=${ZLIB_NAME}

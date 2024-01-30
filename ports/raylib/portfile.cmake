@@ -10,12 +10,22 @@ These can be installed on Ubuntu systems via sudo apt install libgl1-mesa-dev li
     )
 endif()
 
+if(VCPKG_TARGET_IS_OSX OR VCPKG_TARGET_IS_LINUX)
+    set(patches fix-linkGlfw.patch)
+endif()
+
+if(VCPKG_TARGET_IS_EMSCRIPTEN)
+    set(ADDITIONAL_OPTIONS "-DPLATFORM=Web")
+endif()
+
 vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO raysan5/raylib
-    REF 4.0.0
-    SHA512 e9ffab14ab902e3327202e68ca139209ff24100dab62eb03fef50adf363f81e2705d81e709c58cf1514e68e6061c8963555bd2d00744daacc3eb693825fc3417
+    REF "${VERSION}"
+    SHA512 5956bc1646b99baac6eb1652c4d72e96af874337158672155ba144f131de8a4fd19291a58335a92fcaaa2fc818682f93ff4230af0f815efb8b49f7d2a162e9b0
     HEAD_REF master
+    PATCHES
+        ${patches}
 )
 
 string(COMPARE EQUAL "${VCPKG_LIBRARY_LINKAGE}" "dynamic" SHARED)
@@ -34,15 +44,14 @@ else()
 endif()
 
 vcpkg_cmake_configure(
-    SOURCE_PATH ${SOURCE_PATH}
-    PREFER_NINJA
+    SOURCE_PATH "${SOURCE_PATH}"
     OPTIONS
         -DBUILD_EXAMPLES=OFF
-        -DBUILD_GAMES=OFF
         -DSHARED=${SHARED}
         -DSTATIC=${STATIC}
         -DUSE_EXTERNAL_GLFW=OFF # externl glfw3 causes build errors on Windows
         ${FEATURE_OPTIONS}
+        ${ADDITIONAL_OPTIONS}
     OPTIONS_DEBUG
         -DENABLE_ASAN=${DEBUG_ENABLE_SANITIZERS}
         -DENABLE_UBSAN=${DEBUG_ENABLE_SANITIZERS}
@@ -51,6 +60,10 @@ vcpkg_cmake_configure(
         -DENABLE_ASAN=OFF
         -DENABLE_UBSAN=OFF
         -DENABLE_MSAN=OFF
+    MAYBE_UNUSED_VARIABLES
+        SHARED
+        STATIC
+        SUPPORT_HIGH_DPI
 )
 
 vcpkg_cmake_install()
@@ -73,4 +86,4 @@ if(VCPKG_LIBRARY_LINKAGE STREQUAL dynamic)
     )
 endif()
 
-file(INSTALL "${SOURCE_PATH}/LICENSE" DESTINATION "${CURRENT_PACKAGES_DIR}/share/${PORT}" RENAME copyright)
+vcpkg_install_copyright(FILE_LIST "${SOURCE_PATH}/LICENSE")

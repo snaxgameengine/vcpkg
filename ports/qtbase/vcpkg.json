@@ -1,11 +1,12 @@
 {
   "name": "qtbase",
-  "version": "6.2.3",
+  "version": "6.6.1",
+  "port-version": 7,
   "description": "Qt Application Framework Base Module. Includes Core, GUI, Widgets, Networking, SQL, Concurrent and other essential qt components.",
   "homepage": "https://www.qt.io/",
   "license": null,
+  "supports": "!uwp",
   "dependencies": [
-    "freetype",
     {
       "name": "libb2",
       "platform": "!windows"
@@ -26,8 +27,15 @@
       "default-features": false,
       "features": [
         "doubleconversion"
+      ]
+    },
+    {
+      "name": "qtbase",
+      "default-features": false,
+      "features": [
+        "thread"
       ],
-      "platform": "windows"
+      "platform": "osx"
     },
     {
       "name": "qtbase",
@@ -58,13 +66,26 @@
     "jpeg",
 	"pcre2",
     "network",
+    {
+      "name": "opengl",
+      "platform": "!ios"
+    },
     "openssl",
     "png",
     "widgets"
   ],
   "features": {
     "concurrent": {
-      "description": "Provides a high-level multi-threading API. Qt Concurrent"
+      "description": "Provides a high-level multi-threading API. Qt Concurrent",
+      "dependencies": [
+        {
+          "name": "qtbase",
+          "default-features": false,
+          "features": [
+            "thread"
+          ]
+        }
+      ]
     },
     "default-features": {
       "description": "Platform-dependent default features",
@@ -103,11 +124,31 @@
       "description": "Qt Gui",
       "dependencies": [
         {
+          "name": "opengl",
+          "platform": "!ios"
+        },
+        {
           "name": "qtbase",
           "default-features": false,
           "features": [
             "freetype"
           ]
+        },
+        {
+          "name": "qtbase",
+          "default-features": false,
+          "features": [
+            "opengl"
+          ],
+          "platform": "osx"
+        },
+        {
+          "name": "qtbase",
+          "default-features": false,
+          "features": [
+            "thread"
+          ],
+          "platform": "windows"
         }
       ]
     },
@@ -145,6 +186,19 @@
     },
     "network": {
       "description": "Qt Network"
+    },
+    "opengl": {
+      "description": "OpenGL",
+      "dependencies": [
+        "opengl",
+        {
+          "name": "qtbase",
+          "default-features": false,
+          "features": [
+            "gui"
+          ]
+        }
+      ]
     },
     "openssl": {
       "description": "Enable OpenSSL",
